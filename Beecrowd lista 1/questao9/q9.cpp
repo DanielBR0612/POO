@@ -2,25 +2,33 @@
 
 using namespace std;
 
-int main(){
-    int n;
-    int x;
-    int qtd = 2;
-    int qtd2 = 0;
+bool primo(int n){
+    if(n <= 1) return false;
+    if(n <= 3) return true;
+    if(n % 2 == 0 || n % 3 == 0) return false;
 
-    cin >> x;
-    cin >> n;
-
-    for (int i = 0; i <= x; i++){
-        while(n % qtd != 0){
-            if (n % qtd != 0){
-                qtd2++;
-            }
+    for (int i = 5; i * i <= n; i += 6){
+        if(n % i == 0 || n % (i + 2) == 0){
+            return false;
         }
     }
+    return true;
+}
 
-    if (qtd2 == 1){
-        cout << "é primo";
+int main(){
+    int n;
+    cin >> n;
+
+    for (int i; i < n; i++){
+        int x;
+        cin >> x;
+
+        if (primo(x)){
+            cout << "Prime" << "\n";
+        }
+        else {
+            cout << "Not prime" << "\n";
+        }
     }
 
     return 0;
