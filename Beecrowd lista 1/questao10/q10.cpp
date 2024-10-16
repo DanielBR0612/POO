@@ -12,13 +12,13 @@ int main() {
         char first_letter = '\0'; 
         bool is_tautogram = true; 
 
-        
+       
         for (int i = 0; i < sentence.length(); i++) {
-            
+           
             if ((sentence[i] >= 'A' && sentence[i] <= 'Z') || (sentence[i] >= 'a' && sentence[i] <= 'z')) {
                 char current_letter = sentence[i];
 
-               
+                
                 if (current_letter >= 'A' && current_letter <= 'Z') {
                     current_letter = current_letter + ('a' - 'A'); 
                 }
