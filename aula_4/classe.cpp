@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 
 class triangulo {
     public:
@@ -13,9 +14,14 @@ class triangulo {
 
 int main(){
     triangulo t;
-    t.b = 3;
-    t.h = 4;
+    
+    std::cout << "Digite a base do triangulo: \n";
+    std::cin >> t.b;
 
+    std::cout << "Digite a altura do triangulo: \n";
+    std::cin >> t.h;
+
+    std::cout << std::fixed << std::setprecision(2);
     std::cout << t.area() << "\n";
 
     return 0;
