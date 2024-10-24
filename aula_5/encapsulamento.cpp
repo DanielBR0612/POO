@@ -9,13 +9,16 @@ class triangulo{
             if (v > 0){
                 b = v;
             }
+            else{
+                throw std::invalid_argument("A base do triangulo nao pode ser negativa");
+            }
         }
         void setAltura(double v){
             if(v > 0){
                 h = v;
             }
             else{
-                throw std::invalid_argument("A altura do triangulo nao pode ser negativa")
+                throw std::invalid_argument("A altura do triangulo nao pode ser negativa");
             }
         }
         double getBase(){
@@ -36,6 +39,9 @@ class circulo{
         void setRaio(double v){
             if(v > 0){
                 raio = v;
+            }
+            else{
+                throw std::invalid_argument("O raio do triangulo nao pode ser negativa");
             }
         }
         double getRaio(){
