@@ -14,6 +14,9 @@ class triangulo{
             if(v > 0){
                 h = v;
             }
+            else{
+                throw std::invalid_argument("A altura do triangulo nao pode ser negativa")
+            }
         }
         double getBase(){
             return b;
