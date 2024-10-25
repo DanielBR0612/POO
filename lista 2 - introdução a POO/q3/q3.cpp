@@ -69,58 +69,76 @@ class banco {
         }
 };
 
-class UI {
-    private:
-        Banco banco;  // Agora temos uma instância única de Banco na UI
-
+class UI{
     public:
-        void main() {
-            definirNome();  // Define o nome antes de começar as operações
-            
+        banco x;
+        void main(){
+            name();
+            std::string nome = x.getNome();
+            number();
+            std::string numero = x.getNum();
+            std::cout << "Bem vindo a sua conta: " << nome << "\n";
             int op = menu();
-            while (op != 0) {
-                if (op == 1) {
-                    deposito();
-                    std::cout << "O seu saldo eh de: " << banco.getSaldo() << "\n"; 
-                } else if (op == 2) {
-                    saque();
-                    std::cout << "O seu saldo eh de: " << banco.getSaldo() << "\n";
-                } else {
+            while (op != 0){
+                if(op == 1){
+                    double deposito = deposi();
+                    std::cout << "O seu saldo eh de: " << deposito << "\n"; 
+                }
+                else if(op == 2){
+                    double saque = saq();
+                    std::cout << "O seu saldo eh de: " << saque << "\n";
+                }
+                else{
                     break;
                 }
-                op = menu();
+            op = menu();
             }
         }
 
-        void definirNome() {
-            std::string nome;
-            std::cout << "Digite o seu nome: ";
-            std::cin >> nome;
+        void name(){
 
-            banco.setNome(nome);
-            std::cout << "Nome registrado com sucesso: " << banco.getNome() << "\n";
+            std::string namae;
+
+            std::cout << "Digite o seu nome: ";
+            std::cin >> namae;
+
+            x.setNome(namae);
         }
 
-        int menu() {
+        void number(){
+
+            std::string num;
+
+            std::cout << "Digite o numero da sua conta: ";
+            std::cin >> num;
+
+            x.setNum(num);
+        }
+
+        int menu(){
             int op;
-            std::cout << "\nEscolha a operacao que deseja fazer: \n";
-            std::cout << "1 - Deposito 2 - Saque 0 - Sair\n";
+
+            std::cout << "Escolha a operacao que deseja fazer: \n";
+            std::cout << "1-Deposito 2-Saque 0-Sair: ";
             std::cin >> op;
             
             return op;
         }
 
-        void deposito() {
-            double valor;
-            std::cout << "Digite o valor que deseja depositar: ";
-            std::cin >> valor;
+        double deposi(){
+            int v;
 
-            banco.setDin(valor);
-            banco.deposito();
+            std::cout << "Digite o valor que deseja depositar: ";
+            std::cin >> v;
+
+            x.setDin(v);
+
+            double dep = x.deposito();
+
+            return dep;
         }
 
         double saq(){
-            banco x;
             int v;
 
             std::cout << "Digite o valor que deseja sacar: ";
