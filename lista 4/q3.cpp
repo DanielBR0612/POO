@@ -18,9 +18,9 @@ public:
         if (limite < 0) throw std::invalid_argument("Limite invalido");
     }
 
-    void set_socio(Cliente* c) {
-        socio = c;
-        c->socio = this;
+    void set_socio(Cliente& c) {
+        socio = &c;
+        c.socio = this;
     }
 
     double get_limite() const {
@@ -28,8 +28,7 @@ public:
     }
 
     std::string to_string() const {
-        std::string s = nome + " - " + cpf + " - Limite individual = " + std::to_string(limite) + 
-                        " - Limite total = " + std::to_string(get_limite());
+        std::string s = nome + " - " + cpf + " - Limite individual = " + std::to_string(limite) + " - Limite total = " + std::to_string(get_limite());
         if (socio != nullptr) {
             s += " - Socio = " + socio->nome;
         }
@@ -40,18 +39,18 @@ public:
 class Empresa {
 private:
     std::string nome;
-    std::vector<Cliente*> clientes;
+    std::vector<Cliente> clientes;
 
 public:
     Empresa(std::string nome) : nome(nome) {
         if (nome.empty()) throw std::invalid_argument("Nome invalido");
     }
 
-    void inserir(Cliente* c) {
+    void inserir(const Cliente& c) {
         clientes.push_back(c);
     }
 
-    std::vector<Cliente*> listar() const {
+    std::vector<Cliente>& listar() {
         return clientes;
     }
 
@@ -62,7 +61,7 @@ public:
 
 class UI {
 private:
-    static Empresa* empresa;
+    static Empresa empresa;
 
 public:
     static int menu() {
@@ -78,12 +77,11 @@ public:
         std::string nome;
         std::cin.ignore();
         std::getline(std::cin, nome);
-        empresa = new Empresa(nome);
+        empresa = Empresa(nome);
     }
 
     static void mostrar_empresa() {
-        if (empresa != nullptr)
-            std::cout << empresa->to_string() << std::endl;
+        std::cout << empresa.to_string() << std::endl;
     }
 
     static void inserir_cliente() {
@@ -100,35 +98,31 @@ public:
         double limite;
         std::cin >> limite;
 
-        Cliente* cliente = new Cliente(nome, cpf, limite);
-        empresa->inserir(cliente);
+        Cliente cliente(nome, cpf, limite);
+        empresa.inserir(cliente);
     }
 
     static void listar_clientes() {
-        if (empresa != nullptr) {
-            for (auto cliente : empresa->listar()) {
-                std::cout << cliente->to_string() << std::endl;
-            }
+        for (const auto& cliente : empresa.listar()) {
+            std::cout << cliente.to_string() << std::endl;
         }
     }
 
     static void sociedade() {
-        if (empresa != nullptr) {
-            auto clientes = empresa->listar();
-            std::cout << "Lista de clientes:\n";
-            for (size_t i = 0; i < clientes.size(); ++i) {
-                std::cout << i << ": " << clientes[i]->to_string() << std::endl;
-            }
+        auto& clientes = empresa.listar();
+        std::cout << "Lista de clientes:\n";
+        for (size_t i = 0; i < clientes.size(); ++i) {
+            std::cout << i << ": " << clientes[i].to_string() << std::endl;
+        }
 
-            int x, y;
-            std::cout << "Informe o numero do 1 cliente: ";
-            std::cin >> x;
-            std::cout << "Informe o numero do 2 cliente: ";
-            std::cin >> y;
+        int x, y;
+        std::cout << "Informe o numero do 1 cliente: ";
+        std::cin >> x;
+        std::cout << "Informe o numero do 2 cliente: ";
+        std::cin >> y;
 
-            if (x < clientes.size() && y < clientes.size()) {
-                clientes[x]->set_socio(clientes[y]);
-            }
+        if (x < clientes.size() && y < clientes.size()) {
+            clientes[x].set_socio(clientes[y]);
         }
     }
 
@@ -136,30 +130,16 @@ public:
         int op = 0;
         while (op != 9) {
             op = menu();
-            switch(op){
-                case 1:
-                    nova_empresa(); 
-                    break;
-                case 2:
-                    mostrar_empresa();
-                    break;
-                case 3:
-                    inserir_cliente();
-                    break;
-                case 4:
-                    listar_clientes();
-                    break;
-                case 5:
-                    sociedade();
-                    break;
-            }
-           
+            if (op == 1) nova_empresa();
+            if (op == 2) mostrar_empresa();
+            if (op == 3) inserir_cliente();
+            if (op == 4) listar_clientes();
+            if (op == 5) sociedade();
         }
     }
 };
 
-
-Empresa* UI::empresa = nullptr;
+Empresa UI::empresa("");
 
 int main() {
     UI::main();
