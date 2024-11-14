@@ -47,7 +47,7 @@ class Cliente:
         else:
             raise ValueError("Digite um telefone valido")
 
-    def __str__(self):
+    def __str__(self): 
         return f"ID: {self.__id} - Nome: {self.__nome} - Email: {self.__email} - Telefone: {self.__fone}"
     
 class Clientes:
@@ -102,18 +102,18 @@ class Clientes:
     
     @classmethod
     def salvar(cls):
-        with open("clientes3.json", mode="w") as arquivo:
-            json.dump(cls.objetos, arquivo, default= vars)
+        with open("clientes.json", mode="w") as arquivo:
+            json.dump(cls.objetos, arquivo, default = vars)
 
     @classmethod
     def abrir(cls):
         cls.objetos = []
         try:
-            with open("clientes3.json", mode="r") as arquivo:
+            with open("clientes.json", mode="r") as arquivo:
                 clientes_json = json.load(arquivo)
 
                 for obj in clientes_json:
-                    c = Cliente(obj["id"], obj["nome"], obj["email"], obj["fone"])
+                    c = Cliente(obj["_Cliente__id"], obj["_Cliente__nome"], obj["_Cliente__email"], obj["_Cliente__fone"])
                     cls.objetos.append(c)
         except KeyError:
             pass
