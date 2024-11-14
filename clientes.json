@@ -1,1 +1,1 @@
-[{"_Cliente__id": 0, "_Cliente__nome": "Gilbert", "_Cliente__email": "gilbert@example.com", "_Cliente__fone": "1234-5678"}, {"_Cliente__id": 0, "_Cliente__nome": "Eduardo", "_Cliente__email": "eduardo@example.com", "_Cliente__fone": "9876-5432"}, {"_Cliente__id": 0, "_Cliente__nome": "Daniel", "_Cliente__email": "daniel@example.com", "_Cliente__fone": "5555-5555"}]
+[{"id": 1, "nome": "Daniel", "email": "daniel@gmail.com", "fone": "123123123"}, {"id": 2, "nome": "Daniel", "email": "danielbraga@gmail.com", "fone": "981447376"}]

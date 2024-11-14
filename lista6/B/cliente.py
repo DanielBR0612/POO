@@ -6,12 +6,20 @@ class Cliente:
         self.__nome = n
         self.__email = e
         self.__fone = f
+    @property
+    def getID(self):
+        return self.__id
     
+
     def setID(self, id):
         if id >= 0:
             self.__id = id
         else:
             raise ValueError("Digite um id valido")
+    
+    @property
+    def getNome(self):
+        return self.__nome
     
     def setNome(self, n):
         if n != "":
@@ -19,26 +27,25 @@ class Cliente:
         else:
             raise ValueError("Digite um nome valido")
     
+    @property
+    def getEmail(self):
+        return self.__email
+
     def setEmail(self, e):
         if e != "":
             self.__email = e
         else:
             raise ValueError("Digite um email valido")
     
+    @property
+    def getFone(self):
+        return self.__fone
+
     def setFone(self, f):
         if f != "":
             self.__fone = f
         else:
             raise ValueError("Digite um telefone valido")
-    
-    def getID(self):
-        return self.__id
-    def getNome(self):
-        return self.__nome
-    def getEmail(self):
-        return self.__email
-    def getFone(self):
-        return self.__fone
 
     def __str__(self):
         return f"ID: {self.__id} - Nome: {self.__nome} - Email: {self.__email} - Telefone: {self.__fone}"
@@ -50,6 +57,7 @@ class Clientes:
     def inserir(cls, obj):
         cls.abrir()
 
+        id = 0
         for x in cls.objetos:
             if x.id > id:
                 id = x.id
@@ -93,9 +101,9 @@ class Clientes:
             cls.salvar()
     
     @classmethod
-    def salvar():
+    def salvar(cls):
         with open("clientes3.json", mode="w") as arquivo:
-            clientes_json = json.dump(cls.objetos, arquivo, default= vars)
+            json.dump(cls.objetos, arquivo, default= vars)
 
     @classmethod
     def abrir(cls):
@@ -107,6 +115,8 @@ class Clientes:
                 for obj in clientes_json:
                     c = Cliente(obj["id"], obj["nome"], obj["email"], obj["fone"])
                     cls.objetos.append(c)
+        except KeyError:
+            pass
         except FileNotFoundError:
             pass
     
