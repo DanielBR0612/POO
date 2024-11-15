@@ -16,4 +16,4 @@ class Venda:
         else:
             raise ValueError("Digite um id valido")
     
-    def set
+    def setData(self, )

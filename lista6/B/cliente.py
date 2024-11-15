@@ -107,6 +107,6 @@ class Clientes:
                 for obj in clientes_json:
                     c = Cliente(obj["id"], obj["nome"], obj["email"], obj["fone"])
                     cls.objetos.append(c)
-        except FileNotFoundError:
+        except FileNotFoundError:+
             pass
     
