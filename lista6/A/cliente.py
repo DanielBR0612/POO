@@ -70,7 +70,9 @@ class Clientes:
                     # recupera cada dicionário e cria um objeto
                     c = Cliente(obj["id"], obj["nome"], obj["email"], obj["fone"])
                     # insere o objeto na lista
-                    cls.objetos.append(c)    
+                    cls.objetos.append(c)   
+        except KeyError:
+            pass 
         except FileNotFoundError:
             pass
     
