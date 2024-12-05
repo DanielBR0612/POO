@@ -115,12 +115,8 @@ class Clientes:
                 for obj in clientes_json:
                     c = Cliente(obj["_Cliente__id"], obj["_Cliente__nome"], obj["_Cliente__email"], obj["_Cliente__fone"])
                     cls.objetos.append(c)
-<<<<<<< HEAD
-        except FileNotFoundError:+
-=======
         except KeyError:
             pass
         except FileNotFoundError:
->>>>>>> 13cedb75d8eefb2ad80e1fb9e3e29e4689502d5b
             pass
     

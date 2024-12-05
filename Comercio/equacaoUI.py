@@ -4,38 +4,49 @@ import pandas as pd
 
 class EquacaoUI:
     def main():
-            st.header("Calculos de equções do segundo grau")
-            a = st.text_input("informe o A: ")
-            b = st.text_input("Informe o B: ")
-            c = st.text_input("Informe o C: ")
+        st.header("Equação do 2º grau")
+        a = st.text_input("Informe o valor de a")
+        b = st.text_input("Informe o valor de b")
+        c = st.text_input("Informe o valor de c")
+        n = st.text_input("Informe o número de pontos do gráfico", "5")
+        if st.button("Calcular"):
+            eq = Equacao(float(a), float(b), float(c))
+            st.write(f"Delta = {eq.delta()}")
+            st.write(f"X1 = {eq.x1()}")
+            st.write(f"X2 = {eq.x2()}")     
 
-            if st.button("Calcular "):
-                e = Equacao(float(a), float(b), float(c))
-                st.write(e)
-                st.write(f"Delta = {e.delta()}")
-                st.write(f"x1 = {e.x1()}")
-                st.write(f"x2 = {e.x2()}")
+            px = [] # coordenada x de vários pontos
+            py = [] # coordenada y de vários pontos
+            x1 = eq.x1() # menor raiz
+            x2 = eq.x2() # maior raiz
 
-                px = []
-                py = []
+            if eq.delta() > 0:
+                d = x2 - x1
+                xmin = x1 - d/2 # limite inferior do gráfico
+                xmax = x2 + d/2 # limite superior
+            if eq.delta() == 0:
+                xmin = 0.5 * x1 # limite inferior do gráfico
+                xmax = 1.5 * x1 # limite superior
+            if eq.delta() < 0:
+                xmin = 0.5*eq.xplano()
+                xmax = 1.5*eq.xplano()
+            if xmin == 0 and xmax == 0:
+                xmin = -5
+                xmax = 5
 
-                if Equacao.delta() >= 0:
-                    x1 = Equacao.x1()
-                    x2 = Equacao.x2()
-                    d = x2 - x1
-                    xmin = x1 - d/2
-                    xmax = x2 + d/2
-                    npontos = 8
-                    d = (xmax - xmin) / npontos
-                    x = xmin
-
-                    while x < xmax:
-                        px.append(x)
-                        py.append(Equacao.y(x))
-                        x += d
-                    px.append(xmax)
-                    py.append(Equacao.y(xmax))
-                    dic = {"x" : px, "y" : py}
-                    chart_data = pd.DataFrame()
-                    st.line_chart(chart_data)
-
+            npontos = int(n)
+            d = (xmax-xmin)/npontos
+            x = xmin
+            
+            while x < xmax:
+                px.append(x)
+                py.append(eq.y(x))
+                x += d
+           
+            px.append(xmax)
+            py.append(eq.y(xmax))
+            #st.write(px)
+            #st.write(py)
+            dic = { "x" : px, "y" : py }
+            chart_data = pd.DataFrame(dic)
+            st.line_chart(chart_data, x = "x", y = "y")
